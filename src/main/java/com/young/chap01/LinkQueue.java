@@ -1,10 +1,18 @@
-package com.young.tools;
-
+package com.young.chap01;
 
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Queue;
+
+/**
+ * @author young
+ * 在爬虫中需要一个数据结构来保存已经访问过的URL,每当要访问URL时，首先要在这个数据结构中查找，如果当前的URL已经存在，则丢弃；
+ * 此数据结构的特点：
+ * 	1、结构中保存的URL不能重复
+ * 	2、能够快速的查找（实际项目中可能会存在很多的url,需要考虑性能）
+ * 	所以在此选用HashSet作为存储结构
+ */
 public class LinkQueue {
 	//已访问的 url 集合
 	private static Set visitedUrl = new HashSet();

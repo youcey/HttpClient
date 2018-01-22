@@ -1,5 +1,4 @@
-package com.young.tools;
-
+package com.young.chap01;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,12 +11,16 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 
+/**
+ * @author young
+ *
+ */
 public class RetrivePage {
 	private static HttpClient httpClient = new HttpClient();
 	// 设置代理服务器
 	static {
 		// 设置代理服务器的IP地址和端口
-		httpClient.getHostConfiguration().setProxy("172.17.18.84", 8080);
+		httpClient.getHostConfiguration().setProxy("127.0.0.1", 8080);
 	}
 
 	public static boolean downloadPage(String path) throws HttpException,
@@ -56,11 +59,12 @@ public class RetrivePage {
 			}
 			return true;
 		}
+		//当返回状态码为3xx时，通常进行转向
 		//若需要转向，则进行转向操作
 		if ((statusCode == HttpStatus.SC_MOVED_TEMPORARILY) || (statusCode == HttpStatus.SC_MOVED_PERMANENTLY) || (statusCode == HttpStatus.SC_SEE_OTHER) || (statusCode == HttpStatus.SC_TEMPORARY_REDIRECT)) {
 			//读取新的URL地址
 			Header header = postMethod.getResponseHeader("location");
-			if(header!=null){
+			if(header != null){
 				String newUrl = header.getValue();
 				if(newUrl==null||newUrl.equals("")){
 					newUrl="/";
@@ -77,14 +81,12 @@ public class RetrivePage {
 	 * 测试代码
 	 */
 	public static void main(String[] args) {
-		// 抓取lietu首页,输出
+		// 抓取天外天首页,输出
 		try {
-			RetrivePage.downloadPage("http://www.lietu.com");
+			RetrivePage.downloadPage("https://www.twt.edu.cn/");
 		} catch (HttpException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

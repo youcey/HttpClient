@@ -1,8 +1,8 @@
-package com.young.tools;
-
+package com.young.chap01;
 
 import java.util.LinkedList;
 /**
+ * @author young
  * 队列，保存将要访问的URL
  */
 public class Queue {

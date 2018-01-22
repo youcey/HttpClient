@@ -1,16 +1,17 @@
-package com.young.tools;
-
+package com.young.chap01;
 
 import java.util.Set;
 
+/**
+ *  宽度爬虫的主程序
+ */
 public class MyCrawler {
 	/**
 	 * 使用种子初始化 URL 队列
 	 * @return
 	 * @param seeds 种子URL
 	 */
-	private void initCrawlerWithSeeds(String[] seeds)
-	{
+	private void initCrawlerWithSeeds(String[] seeds) {
 		for(int i=0;i<seeds.length;i++)
 			LinkQueue.addUnvisitedUrl(seeds[i]);
 	}
@@ -19,21 +20,20 @@ public class MyCrawler {
 	 * @return
 	 * @param seeds
 	 */
-	public void crawling(String[] seeds)
-	{   //定义过滤器，提取以http://www.lietu.com开头的链接
+	public void crawling(String[] seeds) {   //定义过滤器，提取以http://www.lietu.com开头的链接
 		LinkFilter filter = new LinkFilter(){
 			public boolean accept(String url) {
-				if(url.startsWith("http://www.lietu.com"))
+				if(url.startsWith("http://www.gsau.edu.cn/")) {
 					return true;
-				else
+				}else {
 					return false;
+				}
 			}
 		};
 		//初始化 URL 队列
 		initCrawlerWithSeeds(seeds);
 		//循环条件：待抓取的链接不空且抓取的网页不多于1000
-		while(!LinkQueue.unVisitedUrlsEmpty()&&LinkQueue.getVisitedUrlNum()<=1000)
-		{
+		while(!LinkQueue.unVisitedUrlsEmpty()&&LinkQueue.getVisitedUrlNum()<=1000) {
 			//队头URL出队列
 			String visitUrl=(String)LinkQueue.unVisitedUrlDeQueue();
 			if(visitUrl==null)
@@ -47,17 +47,15 @@ public class MyCrawler {
 
 			Set<String> links=HtmlParserTool.extracLinks(visitUrl,filter);
 			//新的未访问的 URL 入队
-			for(String link:links)
-			{
+			for(String link:links) {
 				LinkQueue.addUnvisitedUrl(link);
 			}
 		}
 	}
 	//main 方法入口
-	public static void main(String[]args)
-	{
+	public static void main(String[]args) {
 		MyCrawler crawler = new MyCrawler();
-		crawler.crawling(new String[]{"http://www.twt.edu.cn"});
+		crawler.crawling(new String[]{"http://www.gsau.edu.cn/"});
 	}
 
 }
